@@ -405,4 +405,10 @@ document.getElementsByClassName("next")[0].addEventListener( "click" , ()=>{
     cur = (cur+1)%(tables.length)
     tables[cur].classList.add("op")
 })
+document.getElementsByClassName("prev")[0].addEventListener( "click" , ()=>{
+    console.log( ( tables[cur]  ) )
+    tables[cur].classList.remove("op")
+    cur = (cur+1)%(tables.length)
+    tables[cur].classList.add("op")
+})
 
