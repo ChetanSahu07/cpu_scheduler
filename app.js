@@ -1,8 +1,4 @@
 
-
-
-
-
 let np = 0 
 var flag = 0 ; 
 
@@ -18,6 +14,10 @@ function srtf( ar , np ){
     let ct = []
     let tat = []
     let wt = []
+
+    let ganchatt = document.createElement("div")  
+    ganchatt.setAttribute( "class" , "ganchatt")
+
     for( var i=0 ; i<np ; i++ ){
         arr.push([ar[i][0] , ar[i][1] , ar[i][2] ] ) 
         at[i] = ar[i][0]
@@ -51,7 +51,10 @@ function srtf( ar , np ){
             time = arr[idx][0] 
         }
         arr[idx][1] = arr[idx][1]-1 
+        ganchatt.insertAdjacentHTML("beforeend" , `<div class="time"> s=${time}</div>` )
+        ganchatt.insertAdjacentHTML("beforeend" , `<div class="process"> P${idx}</div>` )
         time = time+1 
+        ganchatt.insertAdjacentHTML("beforeend" , `<div class="time"> e=${time}</div>` )
         if( arr[idx][1] == 0 ){
             cnt++ 
             ct[idx] = time 
@@ -96,6 +99,9 @@ function srtf( ar , np ){
     c4.insertAdjacentHTML("beforeend" , `<div class="obox insidebox">CT</div>`) 
     c5.insertAdjacentHTML("beforeend" , `<div class="obox insidebox">TAT</div>`) 
     c6.insertAdjacentHTML("beforeend" , `<div class="obox insidebox">WT</div>`) 
+
+    let avgwaitingtime = 0 
+    let avgturnaroundtime = 0 
     // Adding value to each column
     for( var i=0 ; i<np ; i++ ){
         c1.insertAdjacentHTML("beforeend" , `<div class="obox"> ${i}</div>`) 
@@ -104,9 +110,16 @@ function srtf( ar , np ){
         c4.insertAdjacentHTML("beforeend" , `<div class="obox"> ${ct[i]}</div>`) 
         c5.insertAdjacentHTML("beforeend" , `<div class="obox"> ${tat[i]}</div>`) 
         c6.insertAdjacentHTML("beforeend" , `<div class="obox"> ${wt[i]}</div>`) 
+        avgwaitingtime = avgwaitingtime + wt[i] ;
+        avgturnaroundtime = avgturnaroundtime + tat[i] ;
     }
+    avgwaitingtime = parseFloat(avgwaitingtime)/np ;
+    avgturnaroundtime = parseFloat(avgturnaroundtime)/np ;
     cont3.prepend(d1) 
     d1.append(d2)
+    d1.insertAdjacentHTML( "beforeend" , `<div class="performance"> Average waiting time = ${avgwaitingtime} <div>` ) ;
+    d1.insertAdjacentHTML( "beforeend" , `<div class="performance"> Average turn around time = ${avgturnaroundtime} <div>` ) ;
+    //d1.append(ganchatt)
     tables.push(d1)
 }
 
@@ -115,6 +128,9 @@ function srtf( ar , np ){
 function fcfs( ar , np ){
     let arr =  []
     
+    let ganchatt = document.createElement("div") ; 
+    ganchatt.setAttribute( "class" , "ganchatt")
+
     for( var i=0 ; i<np ; i++ ){
         arr.push( [ar[i][0] , ar[i][1] , ar[i][2] ] )
     }
@@ -155,10 +171,13 @@ function fcfs( ar , np ){
         else{
             ps[i] = time
         }
+        ganchatt.insertAdjacentHTML("beforeend" , `<div class="time"> s=${time}</div>` )
+        ganchatt.insertAdjacentHTML("beforeend" , `<div class="process"> P${cp}</div>` )
         ct[cp] = time + bt 
         tat[cp] = ct[cp]-at
         wt[cp] = tat[cp]-bt
         time = ct[cp]
+        ganchatt.insertAdjacentHTML("beforeend" , `<div class="time"> e=${time}</div>` )
     }
 
     for( var i=0 ; i<np ; i++ ){
@@ -201,6 +220,8 @@ function fcfs( ar , np ){
     c5.insertAdjacentHTML("beforeend" , `<div class="obox insidebox">TAT</div>`) 
     c6.insertAdjacentHTML("beforeend" , `<div class="obox insidebox">WT</div>`) 
     // Adding value to each column
+    let avgwaitingtime = 0 
+    let avgturnaroundtime = 0 
     for( var i=0 ; i<np ; i++ ){
         c1.insertAdjacentHTML("beforeend" , `<div class="obox"> ${i}</div>`) 
         c2.insertAdjacentHTML("beforeend" , `<div class="obox"> ${at[i]}</div>`) 
@@ -208,9 +229,16 @@ function fcfs( ar , np ){
         c4.insertAdjacentHTML("beforeend" , `<div class="obox"> ${ct[i]}</div>`) 
         c5.insertAdjacentHTML("beforeend" , `<div class="obox"> ${tat[i]}</div>`) 
         c6.insertAdjacentHTML("beforeend" , `<div class="obox"> ${wt[i]}</div>`) 
+        avgwaitingtime = avgwaitingtime + wt[i] ;
+        avgturnaroundtime = avgturnaroundtime + tat[i] ;
     }
+    avgwaitingtime = parseFloat(avgwaitingtime)/np ;
+    avgturnaroundtime = parseFloat(avgturnaroundtime)/np ;
     cont3.prepend(d1) 
     d1.append(d2)
+    //d1.append(ganchatt)
+    d1.insertAdjacentHTML( "beforeend" , `<div class="performance"> Average waiting time = ${avgwaitingtime} <div>` ) ;
+    d1.insertAdjacentHTML( "beforeend" , `<div class="performance"> Average turn around time = ${avgturnaroundtime} <div>` ) ;
     d1.classList.add("op")
     tables.push(d1)
 }
@@ -319,6 +347,9 @@ function sjf( ar , np ){
     c4.insertAdjacentHTML("beforeend" , `<div class="obox insidebox">CT</div>`) 
     c5.insertAdjacentHTML("beforeend" , `<div class="obox insidebox">TAT</div>`) 
     c6.insertAdjacentHTML("beforeend" , `<div class="obox insidebox">WT</div>`)
+
+    let avgwaitingtime = 0 
+    let avgturnaroundtime = 0 
     
     // Adding value to each column
     for( var i=0 ; i<np ; i++ ){
@@ -328,9 +359,15 @@ function sjf( ar , np ){
         c4.insertAdjacentHTML("beforeend" , `<div class="obox"> ${ct[i]}</div>`) 
         c5.insertAdjacentHTML("beforeend" , `<div class="obox"> ${tat[i]}</div>`) 
         c6.insertAdjacentHTML("beforeend" , `<div class="obox"> ${wt[i]}</div>`) 
+        avgwaitingtime = avgwaitingtime + wt[i] ;
+        avgturnaroundtime = avgturnaroundtime + tat[i] ;
     }
+    avgwaitingtime = parseFloat(avgwaitingtime)/np ;
+    avgturnaroundtime = parseFloat(avgturnaroundtime)/np ;
     cont3.prepend(d1) 
     d1.append(d2)
+    d1.insertAdjacentHTML( "beforeend" , `<div class="performance"> Average waiting time = ${avgwaitingtime} <div>` ) ;
+    d1.insertAdjacentHTML( "beforeend" , `<div class="performance">Average turn around time = ${avgturnaroundtime} <div>` ) ;
     tables.push(d1)
 }
 
@@ -405,6 +442,7 @@ document.getElementsByClassName("next")[0].addEventListener( "click" , ()=>{
     cur = (cur+1)%(tables.length)
     tables[cur].classList.add("op")
 })
+
 document.getElementsByClassName("prev")[0].addEventListener( "click" , ()=>{
     console.log( ( tables[cur]  ) )
     tables[cur].classList.remove("op")
