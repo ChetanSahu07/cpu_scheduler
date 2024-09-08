@@ -1,4 +1,8 @@
 
+
+
+
+
 let np = 0 
 var flag = 0 ; 
 
@@ -424,15 +428,24 @@ document.getElementById("input").addEventListener( "submit" , (event)=>{
     let arr = [] 
     let d1 = document.getElementsByClassName("arrivalTime") ; 
     let d2 = document.getElementsByClassName("brustTime") ; 
+    let flag = 0 
     for( var i=0 ; i<np ; i++ ){
         arr.push( [ parseInt(d1[i].value) , parseInt(d2[i].value ) , parseInt(i) ] ) 
+        if( !Number.isInteger(arr[i][0] )   || !Number.isInteger(arr[i][1] )  ) {
+            flag = 1 ;
+        }
     }
-    fcfs( arr , np )
-    console.log(arr)
-    sjf( arr , np )
-    srtf( arr , np )
-    document.getElementsByClassName("button2")[0].classList.add("op")
-    document.getElementsByClassName("button2")[1].classList.add("op")
+    if( flag == 1 ){
+        alert("Please Enter only numeric values") 
+    }
+    else{
+        fcfs( arr , np )
+        console.log(arr)
+        sjf( arr , np )
+        srtf( arr , np )
+        document.getElementsByClassName("button2")[0].classList.add("op")
+        document.getElementsByClassName("button2")[1].classList.add("op")
+    }
 })
 
 var cur = parseInt(0) 
